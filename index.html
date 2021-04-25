@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		</head>
+<body>
+	<div>
+    <form id="submission" method="post">
+		<h2>Enter Your User ID</h2>
+		<input type="text" id="user-input" name="userID">
+		<input type="submit" value="Submit">
+	  </form>
+	  <form id="submissiontwo" method="post">
+		<h2>Listen to user_ID</h2>
+		<input type="text" id ="listen" name="listenuser">
+		<input type="submit" value="Submit">
+		</form>
+	</div>
+	  <script>
+		  $('#submission').submit(function(e) {
+				e.preventDefault();
+					$.ajax({
+					url: 'http://localhost:8080/new-gripe',
+					type: 'POST',
+					data: $('#user-input'),
+					success: function(data){
+						console.log(data);
+					}
+				});
+			});
+	$('#submissiontwo').submit(function(e) {
+		e.preventDefault();
+		$.ajax({
+				url: 'http://localhost:8080/continuous',
+				type: 'POST',
+				data: $('#listen'),
+				success: function(data){
+						console.log(data);
+		}
+	});
+});
+	  </script>
+</body>
+
+</html>
