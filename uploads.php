@@ -1,10 +1,6 @@
+//this is the cod eto submit files to a database
 <?php
 if(isset($_POST['submit'])){
-
-    $title = $_POST['title'];
-    $gripe = $_POST['gripe'];
-    $category = $_POST['category'];
-
 
     $file = $_FILES['file'];
     $filename = $_FILES['name'];
@@ -21,7 +17,10 @@ if(isset($_POST['submit'])){
     if(in_array($fileactext, $allowed)){
         if($fileError == 0){
             $filenameNew = uniquid('',true).".".$fileactext;
-            $fileDestination = 'finalproj/'.$filenameNew;
+            
+            
+    ??////// Change the file destination to upload it to MongoDb
+            $fileDestination = 'finalproj/'.$filenameNew;  
             move_uploaded_file($fileTmp,$fileDestination)
         }else{
             echo "Error uploading file";
