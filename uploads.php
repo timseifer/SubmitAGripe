@@ -1,4 +1,4 @@
-//this is the cod eto submit files to a database
+//this is the code to submit files to a database
 <?php
 if(isset($_POST['submit'])){
 
@@ -19,7 +19,7 @@ if(isset($_POST['submit'])){
             $filenameNew = uniquid('',true).".".$fileactext;
             
             
-    ??////// Change the file destination to upload it to MongoDb
+    ////// Change the file destination to upload it to MongoDb
             $fileDestination = 'finalproj/'.$filenameNew;  
             move_uploaded_file($fileTmp,$fileDestination)
         }else{
