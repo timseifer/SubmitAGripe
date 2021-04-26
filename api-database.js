@@ -43,7 +43,6 @@ console.log("success");
 
 });
 
-
 function User_Query(user_ID, res){
 theQuery = {submittedByUID: user_ID}
 MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
