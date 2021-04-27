@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<h1 style="text-align: center;">
+		GRIPE LIST
+	</h1>
+<div id="response" style="text-align: center;">
+</div>
+<script>
+let cookies = document.cookie;
+function fetchdata(){
+	$.ajax({
+	url: 'http://localhost:8080/continuous',
+	type: 'post',
+	data: {userID: cookies},
+	success: function(response){
+		$("#response").html(response);
+	}
+	});
+}
+
+$(document).ready(function(){
+	setInterval(fetchdata,5000);
+});
+</script>
+</html>

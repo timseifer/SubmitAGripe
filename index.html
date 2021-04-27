@@ -1,45 +1,82 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		</head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Gripe </title>
+    <link rel="stylesheet" href="./gripe.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
 <body>
-	<div>
-    <form id="submission" method="post">
-		<h2>Enter Your User ID</h2>
-		<input type="text" id="user-input" name="userID">
-		<input type="submit" value="Submit">
-	  </form>
-	  <form id="submissiontwo" method="post">
-		<h2>Listen to user_ID</h2>
-		<input type="text" id ="listen" name="listenuser">
-		<input type="submit" value="Submit">
-		</form>
-	</div>
-	  <script>
-		  $('#submission').submit(function(e) {
+    <section>
+        <div id="header">
+            <nav>
+                <u1>
+                    <li>
+                        <a href="index.html">Feed</a> 
+                        <a href="about.html">Your Gripes</a>
+                        <a href="./gripe.html">Submit a Gripe</a>
+                    </li>
+                </u1>
+            </nav>
+        </div>
+        <div id="sag">
+            <h1> <span id="yellow">SUBMIT</span> &nbsp; <span id="black">A</span> &nbsp; <span id="blueish">GRIPE</span></h1>
+        </div>
+    </section>
+    <section>
+        <div id="main page">
+            <form id="submission" method="post">
+                Title <br> <input type="text" name="title" id="title"> <br>
+                Enter Gripe Here <br> <input type="text" name="gripe" id="gripe"><br>
+                Set category 
+            <select name="category" id="category">
+                <option value="Complaint">Complaint</option>
+                <option value="Feedback">Feedback</option>
+                <option value="Followup">Followup</option>
+            </select>
+            &nbsp; &nbsp; &nbsp; &nbsp;  Add Image(optional) <input type="file" id="btn" value="Insert Image"> <br>
+            <input type="button" id="btn2" value="Cancel"> &nbsp; &nbsp; &nbsp; &nbsp; 
+            <input type="submit"id="btn3" name="submit"  value="Submit">
+            </form>
+            <script>
+            const uuidv4 = require("uuid/v4");
+                    function getCookie(name) {
+                    let matches = document.cookie.match(new RegExp(
+                        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                    ));
+                    return matches ? decodeURIComponent(matches[1]) : undefined;
+                    }
+            if (getCookie["userID"] != null)
+            {
+                cookie = context.Response.Cookies[userID];
+                console.log(cookie);
+            }else{
+            document.cookie = "username=userID path=/";
+            document.cookie = "userid=" + uuidv4;
+            }
+            $('#submission').submit(function(e) {
+                console.log($("#title").val());
 				e.preventDefault();
 					$.ajax({
 					url: 'http://localhost:8080/new-gripe',
 					type: 'POST',
-					data: $('#user-input'),
+                    data: { 
+                            userID: uuidv4,
+                            title: $("#title").val(),
+                            gripe: $("#gripe").val(),
+                            category: $("#category").val()
+
+                },
 					success: function(data){
 						console.log(data);
 					}
 				});
 			});
-	$('#submissiontwo').submit(function(e) {
-		e.preventDefault();
-		$.ajax({
-				url: 'http://localhost:8080/continuous',
-				type: 'POST',
-				data: $('#listen'),
-				success: function(data){
-						console.log(data);
-		}
-	});
-});
-	  </script>
+            </script>
+        </div>
+    </section>
+    
 </body>
-
 </html>
