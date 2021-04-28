@@ -42,7 +42,6 @@ app.post("/continuous", function(req, res) {
 	console.log(userid);
   User_Query(userid, res);
 });
-
  
 app.listen(8080, function(){
   console.log("server is running on port 3000");
