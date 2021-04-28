@@ -177,14 +177,15 @@ function User_Query_Everything(user_ID, res){
 			}
 			else{
 				for(i = 0; i< items.length; i++){
-					res.write("<form id="+'"'+ "submission"+'"'+ "method="+'"'+"post"+'"'+">");
+					res.write("<form id="+'"'+ "like_form"+'"'+ "method="+'"'+"post"+'"'+">");
 					res.write("From user <div id=user>"+ items[i].submittedByUID+"</div>");
 					res.write("<br>"+items[i].dateSubmitted);
 					res.write("<br>"+items[i].GripeTitle);
 					res.write("<br>"+items[i].GripeText);
 					res.write("<br>"+items[i].GripeImage);
 					res.write("<br>"+items[i].GripeCategory);
-					res.write("<br><div id=votes>"+items[i].numVotes+"</div>");	
+					res.write("<br><div id=votes>"+items[i].numVotes+"</div>");
+					res.write("<input type="+'"'+"submit"+'"'+"id="+'"'+"btn3"+'"'+ "name="+'"'+"UPDOOT"+'"'+"value="+'"'+"Submit"+'">');
 					res.write("<br>"+"<br>");	
 					res.write("</form>");		
 				}				
