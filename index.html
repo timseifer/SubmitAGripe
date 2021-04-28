@@ -7,6 +7,7 @@
     <title>Submit a Gripe </title>
     <link rel="stylesheet" href="/gripe.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 </head>
 <body>
     <section>
@@ -41,21 +42,6 @@
             <input type="submit"id="btn3" name="submit"  value="Submit">
             </form>
             <script>
-            const uuidv4 = require("uuid/v4");
-                    function getCookie(name) {
-                    let matches = document.cookie.match(new RegExp(
-                        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-                    ));
-                    return matches ? decodeURIComponent(matches[1]) : undefined;
-                    }
-            if (getCookie["userID"] != null)
-            {
-                cookie = context.Response.Cookies[userID];
-                console.log(cookie);
-            }else{
-            document.cookie = "username=userID path=/";
-            document.cookie = "userid=" + uuidv4;
-            }
             $('#submission').submit(function(e) {
                 console.log($("#title").val());
 				e.preventDefault();
@@ -63,7 +49,7 @@
 					url: 'http://localhost:8080/new-gripe',
 					type: 'POST',
                     data: { 
-                            // userID: uuidv4,
+                            userID: Cookies.get("userID"),
                             title: $("#title").val(),
                             gripe: $("#gripe").val(),
                             category: $("#category").val()

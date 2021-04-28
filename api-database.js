@@ -25,6 +25,7 @@ to interact with the api.
 
 
 app.post("/new-gripe", function(req, res) {
+	var userid = req.body.userID
   	var title = req.body.title;
 	var text = req.body.gripe;
 	var category = req.body.category;
@@ -32,12 +33,14 @@ app.post("/new-gripe", function(req, res) {
 	console.log(text);
 	console.log(category);
 	var time = do_time();
-	new_gripe_submission("testing", text, time, title, "na", category,0, 0);
+	new_gripe_submission(userid, text, time, title, "na", category,0, 0);
 	res.end();
 });
 
 app.post("/continuous", function(req, res) {
-  User_Query("testing", res);
+	var userid = req.body.UserID;
+	console.log(userid);
+  User_Query(userid, res);
 });
 
  
