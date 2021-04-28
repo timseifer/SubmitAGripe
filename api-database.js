@@ -4,36 +4,39 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get("", function(req, res) {
+console.log(__dirname);
   res.sendFile(__dirname + "/index.html");
 });
-app.get('/about.html', function (req, res) {
- res.sendFile(__dirname + "/about.html");
-});
 
-app.use(express.static(__dirname + '/public'));
-// app.get("/", function(req, res) {
+app.get("about.html", function (req, res) {
+	console.log(__dirname);
+	res.send(__dirname + '/about.html');
+})
+  
+// app.get("/gripe.css", function(req, res) {
 // 	res.sendFile(_dirname + "/"+"gripe.css");
 // });
+app.use(express.static(__dirname));
 /*
 1. use ajax with this api setting specific endpoints
 to interact with the api.
 -----------------------------------------------
 */
+
+
 app.post("/new-gripe", function(req, res) {
   	var title = req.body.title;
 	var text = req.body.gripe;
 	var category = req.body.category;
-	var userid = req.body.userID;
 	console.log(title);
 	console.log(text);
 	console.log(category);
 	var time = do_time();
-	new_gripe_submission(userid, text, time, title, "na", category,0, 0);
+	new_gripe_submission("testing", text, time, title, "na", category,0, 0);
 	res.end();
 });
 
 app.post("/continuous", function(req, res) {
-   var userID = req.body.userID;
   User_Query("testing", res);
 });
 
