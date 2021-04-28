@@ -42,6 +42,12 @@ app.post("/continuous", function(req, res) {
 	console.log(userid);
   User_Query(userid, res);
 });
+
+app.post("/continuous-other", function(req,res){
+	var userid = req.body.UserID;
+	console.log(userid);
+	User_Query_Everything(userid, res);
+});
  
 app.listen(8080, function(){
   console.log("server is running on port 3000");
@@ -97,13 +103,13 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		else{
 			for(i = 0; i< items.length; i++){
 				res.write("<form id="+'"'+ "submission"+'"'+ "method="+'"'+"post"+'"'+">");
-				res.write("From user " + items[i].submittedByUID);
+				res.write("From user <div id=user>"+ items[i].submittedByUID+"</div>");
 				res.write("<br>"+items[i].dateSubmitted);
 				res.write("<br>"+items[i].GripeTitle);
 				res.write("<br>"+items[i].GripeText);
 				res.write("<br>"+items[i].GripeImage);
 				res.write("<br>"+items[i].GripeCategory);
-				res.write("<br>"+items[i].numVotes);	
+				res.write("<br><div id=votes>"+items[i].numVotes+"</div>");	
 				res.write("<br>"+"<br>");	
 				res.write("</form>");		
 			}				
@@ -112,7 +118,6 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	});
 	});
 };
-
 
 function deletion(user_ID){
 	var theQuery = {UID: user_ID };    
@@ -154,4 +159,38 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 		console.log("success");
 	});
 };
+
+
+function User_Query_Everything(user_ID, res){
+	theQuery = {submittedByUID: user_ID}
+	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+		if(err){
+			console.log(err);
+			return;
+		}
+		var dbo = db.db("gripes");
+		var collection = dbo.collection('gripe');
+		collection.find().toArray(function(err, items){
+			console.log(items);
+			if(err){
+				console.log(err);
+			}
+			else{
+				for(i = 0; i< items.length; i++){
+					res.write("<form id="+'"'+ "submission"+'"'+ "method="+'"'+"post"+'"'+">");
+					res.write("From user <div id=user>"+ items[i].submittedByUID+"</div>");
+					res.write("<br>"+items[i].dateSubmitted);
+					res.write("<br>"+items[i].GripeTitle);
+					res.write("<br>"+items[i].GripeText);
+					res.write("<br>"+items[i].GripeImage);
+					res.write("<br>"+items[i].GripeCategory);
+					res.write("<br><div id=votes>"+items[i].numVotes+"</div>");	
+					res.write("<br>"+"<br>");	
+					res.write("</form>");		
+				}				
+				res.end();
+			}
+		});
+		});
+	};
 

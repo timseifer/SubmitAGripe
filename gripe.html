@@ -12,7 +12,7 @@
 
 function fetchdata(){
 	$.ajax({
-	url: 'http://localhost:8080/continuous-others',
+	url: 'http://localhost:8080/continuous-other',
 	type: 'post',
 	data: {UserID: Cookies.get("userID")},
 	success: function(response){
