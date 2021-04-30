@@ -12,6 +12,10 @@ app.get("about.html", function (req, res) {
 	console.log(__dirname);
 	res.send(__dirname + '/about.html');
 })
+// app.get("gripe.html", function (req, res) {
+// 	console.log(__dirname);
+// 	res.send(__dirname + '/gripe.html');
+// })
   
 // app.get("/gripe.css", function(req, res) {
 // 	res.sendFile(_dirname + "/"+"gripe.css");
@@ -39,20 +43,28 @@ app.post("/new-gripe", function(req, res) {
 
 app.post("/continuous", function(req, res) {
 	var userid = req.body.UserID;
-	console.log(userid);
+	// console.log(userid);
   User_Query(userid, res);
 });
 
 app.post("/continuous-other", function(req,res){
 	var userid = req.body.UserID;
-	console.log(userid);
+	// console.log(userid);
 	User_Query_Everything(userid, res);
 });
+
+app.post("/upvote", function(req,res){
+		var other_user = req.body.upvoted_user_id;
+		var mytxt = req.body.user_text;
+		console.log("user id to upvote " + other_user + "\n");
+		console.log("user text " + mytxt + "\n");
+		updoot(other_user, mytxt);
+});
+ 
  
 app.listen(8080, function(){
   console.log("server is running on port 3000");
 });
-
 
 var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
@@ -84,6 +96,27 @@ function do_time(){
 	}
 	
 	return (hours.toString() + ":" + minutes.toString());
+}
+
+function updoot(user_ID, user_text){
+	theQuery = {submittedByUID: user_ID, GripeText: user_text}
+	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+		if(err){
+			console.log(err);
+			return;
+		}
+		var dbo = db.db("gripes");
+		var collection = dbo.collection('gripe');
+		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: 1}}, function(err,doc){
+			if(err){
+				console.log(err);
+			}
+			else{
+				console.log("data field upvoted");
+			}
+		});
+		});
+
 }
 
 function User_Query(user_ID, res){
@@ -171,13 +204,13 @@ function User_Query_Everything(user_ID, res){
 		var dbo = db.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.find().toArray(function(err, items){
-			console.log(items);
+			// console.log(items);
 			if(err){
 				console.log(err);
 			}
 			else{
 				for(i = 0; i< items.length; i++){
-					res.write("<form id="+'"'+ "like_form"+'"'+ "method="+'"'+"post"+'"'+">");
+					res.write("<form id="+'"'+ "like_form"+'"'+ ">");
 					res.write("From user <div id=user>"+ items[i].submittedByUID+"</div>");
 					res.write("<br>"+items[i].dateSubmitted);
 					res.write("<br>"+items[i].GripeTitle);
@@ -185,7 +218,7 @@ function User_Query_Everything(user_ID, res){
 					res.write("<br>"+items[i].GripeImage);
 					res.write("<br>"+items[i].GripeCategory);
 					res.write("<br><div id=votes>"+items[i].numVotes+"</div>");
-					res.write("<input type="+'"'+"submit"+'"'+"id="+'"'+"btn3"+'"'+ "name="+'"'+"UPDOOT"+'"'+"value="+'"'+"Submit"+'">');
+					res.write("<input type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+">");
 					res.write("<br>"+"<br>");	
 					res.write("</form>");		
 				}				

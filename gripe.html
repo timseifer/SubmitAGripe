@@ -21,8 +21,36 @@ function fetchdata(){
 	});
 }
 
+
+function upvote_botton(clicked_id, text_val){
+	console.log(text_val);
+			// var text = $(clicked_id).attr('name')
+			var value_o_text = text_val;
+             var userid;
+            if (typeof Cookies.get('userID') === 'undefined'){
+                Cookies.set("userID", uuidv4());
+                userid = Cookies.get('userID');
+            } else {
+                var value = Cookies.get("userID");
+                userid = value;
+            }
+					$.ajax({
+					traditional: true,
+					url: 'http://localhost:8080/upvote',
+					type: 'post',
+                    data: { 
+                            upvoted_user_id: clicked_id,
+							user_text: String(value_o_text)
+                 },
+					success: function(data){
+						console.log(data);
+					}
+				});
+}
+
+
 $(document).ready(function(){
-	setInterval(fetchdata,2000);
+	setInterval(fetchdata,3000);
 });
 </script>
 </html>
