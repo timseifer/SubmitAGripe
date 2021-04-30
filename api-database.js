@@ -51,6 +51,7 @@ app.post("/continuous-other", function(req,res){
 	var userid = req.body.UserID;
 	// console.log(userid);
 	User_Query_Everything(userid, res);
+	tweets(userid, res);
 });
 
 app.post("/upvote", function(req,res){
@@ -222,9 +223,26 @@ function User_Query_Everything(user_ID, res){
 					res.write("<br>"+"<br>");	
 					res.write("</form>");		
 				}				
-				res.end();
 			}
 		});
 		});
 	};
-
+ function tweets(userid, res){
+    var Twitter = require('twitter');
+    var client = new Twitter({
+      consumer_key: '0dewEHx5BMgnKRwdMIuYXIqgx',
+      consumer_secret: 'RYllxqJiOjwLbrbYbCJ2eIlOeap3KPyfUtBoUS5dKz3hdFcTe6',
+      access_token_key: '1377475999638556673-duS2Lv2FaAGo2A5BYmgtgqmPGenIiX',
+      access_token_secret: 'rKGgFqo7cymCo9IdYYlxQQd5HfeFwe8tNe4EvjTn6u6Ie'
+    });
+     
+    var params = {screen_name: 'nodejs'};
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+      if (!error) {
+          console.log(tweets);
+          for(var i = 0; i < 15; i++){
+            res.write(tweets[i].text);
+          }
+    }
+    });
+ }
