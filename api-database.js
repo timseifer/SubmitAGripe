@@ -49,9 +49,9 @@ app.post("/continuous", function(req, res) {
 
 app.post("/continuous-other", function(req,res){
 	var userid = req.body.UserID;
-	// console.log(userid);
+	console.log("running");
 	User_Query_Everything(userid, res);
-	tweets(userid, res);
+	// tweets(userid, res);
 });
 
 app.post("/upvote", function(req,res){
@@ -83,22 +83,20 @@ console.log("success");
 
 function do_time(){
 	var d = new Date();
-	var hours = d.getHours();
-	var minutes = d.getMinutes();
-	if(minutes > 60){
-		hours++;
-		minutes = (minutes)-60;
-	}
-	if(hours > 12){
-		hours = hours % 12;
-	}
-	if(minutes < 10){
-		minutes = "0" + minutes;
-	}
-	
-	return (hours.toString() + ":" + minutes.toString());
+	return (d);
 }
 
+function get_Day(){
+	var d = new Date();
+	var day = d.getUTCDate();
+	return day;
+}
+
+function get_Month(){
+	var d = new Date();
+	var month = d.getUTCMonth();
+	return month;
+}
 function updoot(user_ID, user_text){
 	theQuery = {submittedByUID: user_ID, GripeText: user_text}
 	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
@@ -172,7 +170,7 @@ function deletion(user_ID){
 function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_title, 
 	gripe_image, Gripe_Category, numVotes, numStarVotes){
 	var newData = {"submittedByUID": user_ID, "dateSubmitted": date_submitted,
-	 "GripeTitle": gripe_title, "GripeText": submission_text, 
+	 "GripeTitle": gripe_title, "GripeText": submission_text.replace(/\"/g, ""), 
 	 "GripeImage": gripe_image,
 	"GripeCategory": Gripe_Category, "numVotes": numVotes,
 	 "numStarVotes": numStarVotes};
@@ -204,13 +202,18 @@ function User_Query_Everything(user_ID, res){
 		}
 		var dbo = db.db("gripes");
 		var collection = dbo.collection('gripe');
-		collection.find().toArray(function(err, items){
+		var date = new Date(2021, (get_Month()), (get_Day()+1));
+		// db.collection.remove({dateSubmitted: {"$lt" : new Date(2021, (get_Month()), (get_Day()-1))}})
+		// console.log("Month is "+ get_Day()+"\n");
+		collection.find().sort({numVotes: -1}).toArray(function(err, items){
+
 			// console.log(items);
 			if(err){
 				console.log(err);
 			}
 			else{
 				for(i = 0; i< items.length; i++){
+
 					res.write("<form id="+'"'+ "like_form"+'"'+ ">");
 					res.write("From user <div id=user>"+ items[i].submittedByUID+"</div>");
 					res.write("<br>"+items[i].dateSubmitted);
@@ -221,8 +224,15 @@ function User_Query_Everything(user_ID, res){
 					res.write("<br><div id=votes>"+items[i].numVotes+"</div>");
 					res.write("<input type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+">");
 					res.write("<br>"+"<br>");	
-					res.write("</form>");		
-				}				
+					res.write("</form>");	
+					var less_than_zero = items[i].dateSubmitted - date;
+					var text = items[i].GripeText;
+					if(less_than_zero <= 0){
+						console.log("deletion taking place\n");
+						// db.collection.remove({GripeText: text})
+					}	
+				}
+				res.end();				
 			}
 		});
 		});
