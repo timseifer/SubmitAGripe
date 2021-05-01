@@ -144,7 +144,8 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 				res.write("<br><div id=votes>"+items[i].numVotes+"</div>");	
 				res.write("<br>"+"<br>");	
 				res.write("</form>");		
-			}				
+			}	
+			// tweets(user_ID, res);			
 			res.end();
 		}
 	});
@@ -237,22 +238,32 @@ function User_Query_Everything(user_ID, res){
 		});
 		});
 	};
- function tweets(userid, res){
-    var Twitter = require('twitter');
-    var client = new Twitter({
-      consumer_key: '0dewEHx5BMgnKRwdMIuYXIqgx',
-      consumer_secret: 'RYllxqJiOjwLbrbYbCJ2eIlOeap3KPyfUtBoUS5dKz3hdFcTe6',
-      access_token_key: '1377475999638556673-duS2Lv2FaAGo2A5BYmgtgqmPGenIiX',
-      access_token_secret: 'rKGgFqo7cymCo9IdYYlxQQd5HfeFwe8tNe4EvjTn6u6Ie'
-    });
-     
-    var params = {screen_name: 'nodejs'};
-    client.get('statuses/user_timeline', params, function(error, tweets, response) {
-      if (!error) {
-          console.log(tweets);
-          for(var i = 0; i < 15; i++){
-            res.write(tweets[i].text);
-          }
-    }
-    });
- }
+
+
+//  function tweets(userid, res){
+// 	var theQuery = userid;
+//     var Twitter = require('twitter-node-client').Twitter;
+//     var client = new Twitter({
+//       consumer_key: '0dewEHx5BMgnKRwdMIuYXIqgx',
+//       consumer_secret: 'RYllxqJiOjwLbrbYbCJ2eIlOeap3KPyfUtBoUS5dKz3hdFcTe6',
+//       access_token_key: '1377475999638556673-duS2Lv2FaAGo2A5BYmgtgqmPGenIiX',
+//       access_token_secret: 'rKGgFqo7cymCo9IdYYlxQQd5HfeFwe8tNe4EvjTn6u6Ie'
+//     });
+//     client.getSearch({'q': theQuery,'count': 10}, function(error, tweets, res) {
+//       if (!error) {
+//           console.log(stringify(tweets));
+// 		  xmlhttp.open("GET", tweets, true);
+// 		xmlhttp.send();	
+// 		xmlhttp.onreadystatechange = function() {
+// 			if (this.readyState == 4 && this.status == 200) {
+// 				var myArr = JSON.parse(this.responseText);
+// 				console.log(myArr)
+// 			}
+// 		};	
+//         //   for(var i = 0; i < 15; i++){
+//         //     res.write(tweets[i].text);
+//         //   }
+// 		//   res.end();
+//     }
+//     });
+//  }

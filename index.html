@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/gripe.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     <section>
@@ -42,7 +43,7 @@
             <input type="submit"id="btn3" name="submit"  value="Submit">
             </form>
             <script>
-
+        // import swal from 'sweetalert';
                 function uuidv4() {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -50,6 +51,8 @@
                 });
                 }
             $('#submission').submit(function(e) {
+                Swal.fire("Gripe was submitted");
+                // swal("Gripe has been submitted!");
              var userid;
             if (typeof Cookies.get('userID') === 'undefined'){
                 Cookies.set("userID", uuidv4());
