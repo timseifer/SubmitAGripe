@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+	</head>
+	<h1 style="text-align: center;">
+		TWITTER API GRIPES
+	</h1>
+<div id="response" style="text-align: center;">
+</div>
+	<script>
+
+		function fetchdata(){
+			$.ajax({
+			url: 'http://localhost:8080/continuous-twitter',
+			type: 'post',
+			success: function(response){
+				$("#response").html(response);
+			}
+			});
+		}
+		
+		$(document).ready(function(){
+			setInterval(fetchdata,1000);
+		});
+		</script>
+</html>
