@@ -75,3 +75,10 @@ a:link, a:visited {
 a:hover, a:active {
   background-color: orange;
 }
+
+#response{
+    background-color: #f2c94c;
+    text-align: center;  
+    height: 100%;
+    margin: 0;
+}
