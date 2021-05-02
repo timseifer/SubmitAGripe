@@ -1,26 +1,32 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 	<head>
 		<link rel="stylesheet" href="gripe.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	</head>
-	
-<div id="header">
-            <nav>
-                <u1>
-                    <li>
-                        <a href="gripe.html" target="_self">Feed</a> 
-                        <a href="about.html">Your Gripes</a>
-                        <a href="index.html">Submit a Gripe</a>
-			<a href="twitter.html"> Twitter Gripes </a>
-                    </li>
-                </u1>
-            </nav>
-</div>
+ <body>
+	<section id="header-section"> 
+	<div class="header">
+		
+		<div class="header-logo"><a href="<!--  -->" class="logo"> <img alt="Image" src="https://raw.githubusercontent.com/timseifer/SubmitAGripe/d82a08756ab72880080cb2ac5ea53e1c5e78175e/assets/GripeRank.png" height="80px"> </a></div>
+	    
+		<div class="header-right" id="header-rightmenu">
+			<a href="index.html" target="_self">Sibmit a gripe</a>
+		    <a href="about.html" target="_self">Your Gripes</a>
+			<a href="gripe.html" target="_self" title="Services">Feed </a>
+	    </div>
+		
+	</div>
+		
+	</section>
 
-	<div id = "sag"><h1 style="text-align: center;">
-		EVERYONE'S GRIPES
-	</h1></div>
+	<section>
+        <div id="sag">
+            <h1> <span id="yellow">YOUR</span> &nbsp; <span id="blueish">GRIPES</span></h1>
+        </div>
+    </section>
 <div id="response" style="text-align: center;">
 </div>
 <script>
@@ -65,7 +71,8 @@ function upvote_botton(clicked_id, text_val){
 
 
 $(document).ready(function(){
-	setInterval(fetchdata,5000);
+	setInterval(fetchdata,3000);
 });
 </script>
+	</body>	
 </html>
