@@ -33,18 +33,19 @@ app.post("/new-gripe", function(req, res) {
   	var title = req.body.title;
 	var text = req.body.gripe;
 	var category = req.body.category;
+	var image = req.body.img;
 	console.log(title);
 	console.log(text);
 	console.log(category);
 	var time = do_time();
-	new_gripe_submission(userid, text, time, title, "na", category,0, 0);
+	new_gripe_submission(userid, text, time, title, image, category,0, 0);
 	res.end();
 });
 
 app.post("/continuous", function(req, res) {
 	var userid = req.body.UserID;
 	// console.log(userid);
-  User_Query(userid, res);
+  	User_Query(userid, res);
 });
 
 app.post("/continuous-twitter", function(req, res) {
@@ -64,8 +65,27 @@ app.post("/upvote", function(req,res){
 		console.log("user id to upvote " + other_user + "\n");
 		console.log("user text " + mytxt + "\n");
 		updoot(other_user, mytxt);
+		// User_Query_Everything(null, res);
 });
  
+app.post("/downvote", function(req,res){
+	var other_user = req.body.upvoted_user_id;
+	var mytxt = req.body.user_text;
+	console.log("user id to downvote " + other_user + "\n");
+	console.log("user text " + mytxt + "\n");
+	downdoot(other_user, mytxt);
+	// User_Query_Everything(null, res);
+});
+
+app.post("/deletion", function(req,res){
+	var other_user = req.body.upvoted_user_id;
+	var mytxt = req.body.user_text;
+	console.log("user id to downvote " + other_user + "\n");
+	console.log("user text " + mytxt + "\n");
+	deletion(other_user, mytxt);
+	// User_Query_Everything(null, res);
+});
+
  
 app.listen(8080, function(){
   console.log("server is running on port 3000");
@@ -122,6 +142,27 @@ function updoot(user_ID, user_text){
 
 }
 
+function downdoot(user_ID, user_text){
+	theQuery = {submittedByUID: user_ID, GripeText: user_text}
+	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+		if(err){
+			console.log(err);
+			return;
+		}
+		var dbo = db.db("gripes");
+		var collection = dbo.collection('gripe');
+		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: -1}}, function(err,doc){
+			if(err){
+				console.log(err);
+			}
+			else{
+				console.log("data field upvoted");
+			}
+		});
+		});
+
+}
+
 function User_Query(user_ID, res){
 theQuery = {submittedByUID: user_ID}
 MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
@@ -145,7 +186,9 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 				res.write("<br>"+items[i].GripeText);
 				res.write("<br>"+items[i].GripeImage);
 				res.write("<br>"+items[i].GripeCategory);
-				res.write("<br><div id=votes>"+items[i].numVotes+"</div>");	
+				res.write("<br><div id=votes>"+items[i].numVotes+"</div>");
+				res.write("<div style= font-weight:bold>DELETE POST</div>")
+				res.write("<input style=background-color:white; type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"deletion_button(this.id" + ','+"this.name)"+">");	
 				res.write("<br>"+"<br>");	
 				res.write("</form>");		
 			}			
@@ -155,8 +198,8 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	});
 };
 
-function deletion(user_ID){
-	var theQuery = {UID: user_ID };    
+function deletion(user_ID, mytxt){
+	var theQuery = {"submittedByUID": user_ID, "GripeText": mytxt};    
 	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
@@ -217,16 +260,17 @@ function User_Query_Everything(user_ID, res){
 			}
 			else{
 				for(i = 0; i< items.length; i++){
-					tweets(items[i].GripeText, null);
 					res.write("<form id="+'"'+ "like_form"+'"'+ ">");
 					res.write("From user <div id=user>"+ items[i].submittedByUID+"</div>");
-					res.write("<br>"+items[i].dateSubmitted);
-					res.write("<br>"+items[i].GripeTitle);
-					res.write("<br>"+items[i].GripeText);
-					res.write("<br>"+items[i].GripeImage);
-					res.write("<br>"+items[i].GripeCategory);
-					res.write("<br><div id=votes>"+items[i].numVotes+"</div>");
+					res.write("<div style= font-weight:bold>SUBMITTED ON</div>"+items[i].dateSubmitted);
+					res.write("<div style= font-weight:bold>THE TITLE</div>"+items[i].GripeTitle);
+					res.write("<div style= font-weight:bold>THE GRIPE</div>"+items[i].GripeText);
+					res.write("<div style= font-weight:bold>GRIPE IMAGE</div>"+items[i].GripeImage);
+					res.write("<div style= font-weight:bold>CATEGORY</div>"+items[i].GripeCategory);
+					res.write("<div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"</div>");
+					res.write("<div style= font-weight:bold> UP | DOWN</div>");
 					res.write("<input type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+">");
+					res.write("<input style= background-color:black; type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+">");
 					res.write("<br>"+"<br>");	
 					res.write("</form>");	
 					var less_than_zero = items[i].dateSubmitted - date;
@@ -243,7 +287,7 @@ function User_Query_Everything(user_ID, res){
 	};
 
 
-	function tweets(res){
+function tweets(res){
 		var Twitter = require('twitter');
 		var client = new Twitter({
 		  consumer_key: '0dewEHx5BMgnKRwdMIuYXIqgx',
@@ -251,31 +295,34 @@ function User_Query_Everything(user_ID, res){
 		  access_token_key: '1377475999638556673-duS2Lv2FaAGo2A5BYmgtgqmPGenIiX',
 		  access_token_secret: 'rKGgFqo7cymCo9IdYYlxQQd5HfeFwe8tNe4EvjTn6u6Ie'
 		});
-   
-		client.get('search/tweets.json', {q: "#complaint"}, function(error, tweets, response) {
-		  if (!error) {
-			  console.log(tweets);
-				res.write(JSON.stringify(tweets.statuses[0].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[1].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[2].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[3].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[4].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[5].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[6].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[7].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[8].text));
-				res.write("<br><br>");
-				res.write(JSON.stringify(tweets.statuses[9].text));
-				res.write("<br><br>");
-				res.end();  		
-		}
-		});
+   try {
+	client.get('search/tweets.json', {q: "#complaint"}, function(error, tweets) {
+		if (!error) {
+			res.write("<h2 style=text-align: center>"+"From real word problems to poor customer service to the internet cutting out, we all have gripes. Check out the world's gripes."+"</h2>");
+			  res.write(JSON.stringify(tweets.statuses[0].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[1].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[2].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[3].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[4].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[5].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[6].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[7].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[8].text));
+			  res.write("<br><br>");
+			  res.write(JSON.stringify(tweets.statuses[9].text));
+			  res.write("<br><br>");
+			  res.end();  
+	  }
+	  });
+   } catch (error) {
+	   console.log("twitter time off\n");
+   }
 }
