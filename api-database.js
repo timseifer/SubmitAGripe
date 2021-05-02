@@ -12,10 +12,10 @@ app.get("about.html", function (req, res) {
 	console.log(__dirname);
 	res.send(__dirname + '/about.html');
 })
-// app.get("gripe.html", function (req, res) {
-// 	console.log(__dirname);
-// 	res.send(__dirname + '/gripe.html');
-// })
+app.get("gripe.html", function (req, res) {
+	console.log(__dirname);
+	res.send(__dirname + '/gripe.html');
+})
   
 // app.get("/gripe.css", function(req, res) {
 // 	res.sendFile(_dirname + "/"+"gripe.css");
@@ -255,11 +255,27 @@ function User_Query_Everything(user_ID, res){
 		client.get('search/tweets.json', {q: "#complaint"}, function(error, tweets, response) {
 		  if (!error) {
 			  console.log(tweets);
-			  for(var i = 0; i < 15; i++){
-				res.write(JSON.stringify(tweets.statuses[i].text));
+				res.write(JSON.stringify(tweets.statuses[0].text));
 				res.write("<br><br>");
-			  }
-			  res.end();
+				res.write(JSON.stringify(tweets.statuses[1].text));
+				res.write("<br><br>");
+				res.write(JSON.stringify(tweets.statuses[2].text));
+				res.write("<br><br>");
+				res.write(JSON.stringify(tweets.statuses[3].text));
+				res.write("<br><br>");
+				res.write(JSON.stringify(tweets.statuses[4].text));
+				res.write("<br><br>");
+				res.write(JSON.stringify(tweets.statuses[5].text));
+				res.write("<br><br>");
+				res.write(JSON.stringify(tweets.statuses[6].text));
+				res.write("<br><br>");
+				res.write(JSON.stringify(tweets.statuses[7].text));
+				res.write("<br><br>");
+				res.write(JSON.stringify(tweets.statuses[8].text));
+				res.write("<br><br>");
+				res.write(JSON.stringify(tweets.statuses[9].text));
+				res.write("<br><br>");
+				res.end();  		
 		}
 		});
 }
