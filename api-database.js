@@ -252,12 +252,11 @@ function User_Query_Everything(user_ID, res){
 		  access_token_secret: 'rKGgFqo7cymCo9IdYYlxQQd5HfeFwe8tNe4EvjTn6u6Ie'
 		});
    
-		var params = {screen_name: 'nodejs'};
 		client.get('search/tweets.json', {q: "#complaint"}, function(error, tweets, response) {
 		  if (!error) {
 			  console.log(tweets);
 			  for(var i = 0; i < 15; i++){
-				res.write(JSON.stringify(tweets['stasuses'][0]['text']));
+				res.write(JSON.stringify(tweets.statuses[i].text)+ "<br>" + "<br>");
 			  }
 			  res.end();
 		}
