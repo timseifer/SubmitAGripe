@@ -256,7 +256,8 @@ function User_Query_Everything(user_ID, res){
 		  if (!error) {
 			  console.log(tweets);
 			  for(var i = 0; i < 15; i++){
-				res.write(JSON.stringify(tweets.statuses[i].text)+ "<br>" + "<br>");
+				res.write(JSON.stringify(tweets.statuses[i].text));
+				res.write("<br><br>");
 			  }
 			  res.end();
 		}
