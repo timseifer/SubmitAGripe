@@ -11,7 +11,7 @@ body{
 #sag{
     margin: 0;
     padding: 0;
-    min-height: 100px;
+    min-height: 50px;
     text-align: center;
     background-color: #2f80ed;
 }
@@ -27,8 +27,8 @@ body{
 #title{
     min-height: 20px;
     width: 80%;
-    padding: 40px;
-    margin: 20px;
+    padding: 20px;
+    margin: 10px;
 }
 #gripe{
     min-height: 150px;
@@ -61,4 +61,17 @@ a{
 form{
     position: relative;
     left: 2%;
+}
+
+a:link, a:visited {
+  background-color: #f2c94c;
+  color: #2f80ed;
+  padding: 7px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: orange;
 }
