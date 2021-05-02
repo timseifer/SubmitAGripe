@@ -1,16 +1,58 @@
-body{
+body,html{
     background-color: #E0E0E0;
+	max-width: 1200px;
+	margin: auto;
+	font-family:"Gill Sans", Helvetica, Arial, "sans-serif";
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
 }
 
-#header{
-    min-height: 40px;
-    background-color: #2f80ed;
-    margin: 0;
-    padding: 0;
+h1 {    font-size: 40px; margin: 1px}
+/*Header styling*/
+
+#header-section{
+  overflow: hidden;
+  width:100%;
+  height: 85px;
+  position:relative;
+  top: 0;
+  z-index:99;
+  background-color: #2f80ed;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  box-shadow: 0em 0em 2em 5px rgba(72,110,186,0.25) ;
+
 }
+#header-section .header a {
+  float: left;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 20px; 
+  line-height: 25px;
+  border-radius: 1px;
+  position: relative;
+  margin-top: 20px;
+  font-family:"Gill Sans", Helvetica, Arial, "sans-serif";
+	display: block;
+}
+
+#header-section	.header a:hover {color: #F2C94C; font-style: oblique}
+#header-section	.header a.logo {margin-bottom: -20px;position: relative;top: -30px}
+#header-section	.header a.active {color: #fff}
+#header-section .header a.icon{display:none;}
+
+/*Setting up the spacing*/
+#header-section .header-right {float: right;padding-right: 1%;}
+#header-section .header-logo {position:absolute;left: 50%;margin-left: -40px;}
+
+
 #sag{
-    margin: 0;
-    padding: 0;
+    margin-top: 5px;
+    padding: 1px;
     min-height: 50px;
     text-align: center;
     background-color: #2f80ed;
@@ -63,15 +105,20 @@ form{
     left: 2%;
 }
 
-a:link, a:visited {
-  background-color: #f2c94c;
-  color: #2f80ed;
-  padding: 7px 12px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
+@media screen and (max-width : 1100px ){#header-section .header-left {float: left;padding-left: 1%;} #header-section .header-right {float: right;padding-right: 0%;}}
 
+<<<<<<< HEAD
+@media screen and (max-width : 1000px ){ #header-section .header-logo {position:absolute;left: 1%;margin-left: 0px;} }
+=======
 a:hover, a:active {
   background-color: orange;
 }
+
+#response{
+    background-color: #f2c94c;
+    text-align: center;  
+    height: 100%;
+    margin: 0;
+    width: 80%;
+}
+>>>>>>> 98229f0c049eadbc329788179723d4cf93a88a94
