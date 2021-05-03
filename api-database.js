@@ -96,16 +96,13 @@ const server = app.listen(process.env.PORT || 80, () => {
 var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
 MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
 		return;
 	}
-	const dbo = db.db("gripes");
-	const collection = dbo.collection('gripe');
-	app.locals.collection = collection;
 console.log("success");
-
 
 });
 
@@ -154,6 +151,8 @@ function downdoot(user_ID, user_text){
 			console.log(err);
 			return;
 		}
+		var dbo = db.db("gripes");
+		var collection = dbo.collection('gripe');
 		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: -1}}, function(err,doc){
 			if(err){
 				console.log(err);
@@ -168,11 +167,14 @@ function downdoot(user_ID, user_text){
 
 function User_Query(user_ID, res){
 theQuery = {submittedByUID: user_ID}
+MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
 		return;
 	}
-	app.locals.collection.find(theQuery).toArray(function(err, items){
+	var dbo = db.db("gripes");
+	var collection = dbo.collection('gripe');
+	collection.find(theQuery).toArray(function(err, items){
 		console.log(items);
 		if(err){
 			console.log(err);
@@ -194,6 +196,7 @@ theQuery = {submittedByUID: user_ID}
 			}			
 			res.end();
 		}
+	});
 	});
 };
 
@@ -241,6 +244,7 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 
 function User_Query_Everything(user_ID, res){
 	theQuery = {submittedByUID: user_ID}
+	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
@@ -250,7 +254,7 @@ function User_Query_Everything(user_ID, res){
 		var date = new Date(2021, (get_Month()), (get_Day()+1));
 		// db.collection.remove({dateSubmitted: {"$lt" : new Date(2021, (get_Month()), (get_Day()-1))}})
 		// console.log("Month is "+ get_Day()+"\n");
-		app.locals.collection.find().sort({numVotes: -1}).toArray(function(err, items){
+		collection.find().sort({numVotes: -1}).toArray(function(err, items){
 
 			// console.log(items);
 			if(err){
@@ -280,6 +284,8 @@ function User_Query_Everything(user_ID, res){
 				}
 				res.end();				
 			}
+		});
+		db.close();
 		});
 	};
 
