@@ -39,7 +39,7 @@ app.post("/new-gripe", function(req, res) {
 	console.log(text);
 	console.log(category);
 	var time = do_time();
-	new_gripe_submission(userid, text, time, title, image, category,0, 0);
+	new_gripe_submission(userid, text, time, title, image, category,0, 0, database);
 	res.end();
 });
 
@@ -83,7 +83,7 @@ app.post("/deletion", function(req,res){
 	var mytxt = req.body.user_text;
 	console.log("user id to downvote " + other_user + "\n");
 	console.log("user text " + mytxt + "\n");
-	deletion(other_user, mytxt);
+	deletion(other_user, mytxt, database);
 	// User_Query_Everything(null, res);
 });
 
@@ -194,9 +194,8 @@ theQuery = {submittedByUID: user_ID}
 	});
 };
 
-function deletion(user_ID, mytxt){
+function deletion(user_ID, mytxt, db){
 	var theQuery = {"submittedByUID": user_ID, "GripeText": mytxt};    
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
@@ -207,18 +206,16 @@ function deletion(user_ID, mytxt){
 		if (err) throw err;    
 		console.log("document(s) deleted");    
 			});
-		})
 };
 
 function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_title, 
-	gripe_image, Gripe_Category, numVotes, numStarVotes){
+	gripe_image, Gripe_Category, numVotes, numStarVotes, db){
 	var newData = {"submittedByUID": user_ID, "dateSubmitted": date_submitted,
 	 "GripeTitle": gripe_title, "GripeText": submission_text.replace(/\"/g, ""), 
 	 "GripeImage": gripe_image,
 	"GripeCategory": Gripe_Category, "numVotes": numVotes,
 	 "numStarVotes": numStarVotes};
 
-		MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
@@ -232,7 +229,6 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 			console.log("new document inserted");
 		})
 		console.log("success");
-	});
 };
 
 
