@@ -27,6 +27,22 @@ app.use(express.static(__dirname));
 to interact with the api.
 -----------------------------------------------
 */
+var mongo = require('mongodb');
+var MongoClient = mongo.MongoClient;
+const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+const database;
+
+MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+	if(err){
+		console.log(err);
+		return;
+	}
+database = db;
+
+console.log("success");
+});
+
 
 
 app.post("/new-gripe", function(req, res) {
@@ -42,22 +58,6 @@ app.post("/new-gripe", function(req, res) {
 	new_gripe_submission(userid, text, time, title, image, category,0, 0, database);
 	res.end();
 });
-
-var mongo = require('mongodb');
-var MongoClient = mongo.MongoClient;
-const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
-var database;
-
-MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
-	if(err){
-		console.log(err);
-		return;
-	}
-database = db;
-console.log("success");
-});
-
 
 app.post("/continuous", function(req, res) {
 	var userid = req.body.UserID;
