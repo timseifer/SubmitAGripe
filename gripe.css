@@ -91,6 +91,7 @@ h1 {    font-size: 40px; margin: 1px}
 	left: 50%;
 	margin-left: -220px;
 	padding: 5px;
+	border-radius: 10px;
 	
 }
 #btn3{
@@ -99,7 +100,8 @@ h1 {    font-size: 40px; margin: 1px}
 	font-size: 20px; 
 	position:absolute;
 	padding: 5px;
-    left: 1px;
+    left: 50%;
+	margin-left: 20px;
     color:#fff;
     border-radius: 10px;
 }
@@ -118,7 +120,7 @@ CSS CREDIT
 https://www.reddit.com/r/css/comments/1iyag1/upvote_and_downvote_in_pure_css/
 */
 input[type=button]{
-    width: 0; height: 0;
+    width: 100; height: 25;
     border-color: orangered;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
