@@ -76,7 +76,7 @@
                 console.log($("#title").val());
 				e.preventDefault();
 					$.ajax({
-					url: 'https://submit-a-gripe.herokuapp.com/new-gripe',
+					url: 'https://localhost:8080/new-gripe',
 					type: 'POST',
                     data: { 
                             userID: Cookies.get("userID"),
