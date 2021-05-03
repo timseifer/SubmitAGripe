@@ -31,7 +31,7 @@ var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-const database;
+var database;
 
 MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
