@@ -103,7 +103,7 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		return;
 	}
 console.log("success");
-
+app.locals.db = db;
 });
 
 
@@ -167,11 +167,11 @@ function downdoot(user_ID, user_text){
 
 function User_Query(user_ID, res){
 theQuery = {submittedByUID: user_ID}
-MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
 		return;
 	}
+	var db = req.app.locals.db;
 	var dbo = db.db("gripes");
 	var collection = dbo.collection('gripe');
 	collection.find(theQuery).toArray(function(err, items){
@@ -196,7 +196,6 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 			}			
 			res.end();
 		}
-	});
 	});
 };
 
@@ -244,11 +243,11 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 
 function User_Query_Everything(user_ID, res){
 	theQuery = {submittedByUID: user_ID}
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
-		}
+		}	
+		var db = req.app.locals.db;
 		var dbo = db.db("gripes");
 		var collection = dbo.collection('gripe');
 		var date = new Date(2021, (get_Month()), (get_Day()+1));
@@ -284,7 +283,6 @@ function User_Query_Everything(user_ID, res){
 				}
 				res.end();				
 			}
-		});
 		});
 	};
 
