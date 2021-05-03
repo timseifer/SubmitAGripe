@@ -87,7 +87,7 @@ app.post("/deletion", function(req,res){
 });
 
  
-app.listen(8080, function(){
+app.listen(80, function(){
   console.log("server is running on port 3000");
 });
 

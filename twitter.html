@@ -33,7 +33,7 @@
 
 		function fetchdata(){
 			$.ajax({
-			url: 'http://localhost:8080/continuous-twitter',
+			url: 'https://submit-a-gripe.herokuapp.com/continuous-twitter',
 			type: 'post',
 			success: function(response){
 				$("#response").html(response);

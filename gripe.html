@@ -34,7 +34,7 @@
 
 function fetchdata(){
 	$.ajax({
-	url: 'http://localhost:8080/continuous-other',
+	url: 'https://submit-a-gripe.herokuapp.com/continuous-other',
 	type: 'post',
 	data: {UserID: Cookies.get("userID")},
 	success: function(response){
@@ -58,7 +58,7 @@ function upvote_botton(clicked_id, text_val){
             }
 					$.ajax({
 					traditional: true,
-					url: 'http://localhost:8080/upvote',
+					url: 'https://submit-a-gripe.herokuapp.com/upvote',
 					type: 'post',
                     data: { 
                             upvoted_user_id: clicked_id,
@@ -85,7 +85,7 @@ function downvote_botton(clicked_id, text_val){
             }
 					$.ajax({
 					traditional: true,
-					url: 'http://localhost:8080/downvote',
+					url: 'https://submit-a-gripe.herokuapp.com/downvote',
 					type: 'post',
                     data: { 
                             upvoted_user_id: clicked_id,

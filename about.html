@@ -37,7 +37,7 @@
 
 function fetchdata(){
 	$.ajax({
-	url: 'http://localhost:8080/continuous',
+	url: 'https://submit-a-gripe.herokuapp.com/continuous',
 	type: 'post',
 	data: {UserID: Cookies.get("userID")},
 	success: function(response){
@@ -60,7 +60,7 @@ function deletion_button(clicked_id, text_val){
             }
 					$.ajax({
 					traditional: true,
-					url: 'http://localhost:8080/deletion',
+					url: 'https://submit-a-gripe.herokuapp.com/deletion',
 					type: 'post',
                     data: { 
                             upvoted_user_id: clicked_id,
