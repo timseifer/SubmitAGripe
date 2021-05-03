@@ -53,7 +53,6 @@ var database = MongoClient.connect(url, {useUnifiedTopology: true}, function(err
 		return;
 	}
 console.log("success");
-return db;
 });
 
 
