@@ -97,13 +97,12 @@ var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-var database = MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
 		return;
 	}
 console.log("success");
-return db;
 
 });
 
@@ -198,7 +197,6 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 			res.end();
 		}
 	});
-	db.close();
 	});
 };
 
@@ -287,7 +285,6 @@ function User_Query_Everything(user_ID, res){
 				res.end();				
 			}
 		});
-		db.close();
 		});
 	};
 
