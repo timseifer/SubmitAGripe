@@ -31,13 +31,15 @@ var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-var database = MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+
+var db = null;
+MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
 	if(err){
 		console.log(err);
 		return;
 	}
 console.log("success");
-return db;
+db = client.db("gripes");
 });
 
 
@@ -52,14 +54,14 @@ app.post("/new-gripe", function(req, res) {
 	console.log(text);
 	console.log(category);
 	var time = do_time();
-	new_gripe_submission(userid, text, time, title, image, category,0, 0, database);
+	new_gripe_submission(userid, text, time, title, image, category,0, 0, db);
 	res.end();
 });
 
 app.post("/continuous", function(req, res) {
 	var userid = req.body.UserID;
 	// console.log(userid);
-  	User_Query(userid, res, database);
+  	User_Query(userid, res, db);
 });
 
 app.post("/continuous-twitter", function(req, res) {
@@ -69,7 +71,7 @@ app.post("/continuous-twitter", function(req, res) {
 app.post("/continuous-other", function(req,res){
 	var userid = req.body.UserID;
 	console.log("running");
-	User_Query_Everything(userid, res, database);
+	User_Query_Everything(userid, res, db);
 	// tweets(userid, res);
 });
 
@@ -78,7 +80,7 @@ app.post("/upvote", function(req,res){
 		var mytxt = req.body.user_text;
 		console.log("user id to upvote " + other_user + "\n");
 		console.log("user text " + mytxt + "\n");
-		updoot(other_user, mytxt, database);
+		updoot(other_user, mytxt, db);
 		// User_Query_Everything(null, res);
 });
  
@@ -87,7 +89,7 @@ app.post("/downvote", function(req,res){
 	var mytxt = req.body.user_text;
 	console.log("user id to downvote " + other_user + "\n");
 	console.log("user text " + mytxt + "\n");
-	downdoot(other_user, mytxt, database);
+	downdoot(other_user, mytxt, db);
 	// User_Query_Everything(null, res);
 });
 
@@ -96,7 +98,7 @@ app.post("/deletion", function(req,res){
 	var mytxt = req.body.user_text;
 	console.log("user id to downvote " + other_user + "\n");
 	console.log("user text " + mytxt + "\n");
-	deletion(other_user, mytxt, database);
+	deletion(other_user, mytxt, db);
 	// User_Query_Everything(null, res);
 });
 
@@ -123,13 +125,12 @@ function get_Month(){
 	var month = d.getUTCMonth();
 	return month;
 }
-function updoot(user_ID, user_text, database){
+function updoot(user_ID, user_text, dbo){
 	theQuery = {submittedByUID: user_ID, GripeText: user_text}
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = database.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: 1}}, function(err,doc){
 			if(err){
@@ -161,13 +162,12 @@ function downdoot(user_ID, user_text, database){
 
 }
 
-function User_Query(user_ID, res, database){
+function User_Query(user_ID, res, dbo){
 theQuery = {submittedByUID: user_ID}
 	if(err){
 		console.log(err);
 		return;
 	}
-	var dbo = database.db("gripes");
 	var collection = dbo.collection('gripe');
 	collection.find(theQuery).toArray(function(err, items){
 		console.log(items);
@@ -194,7 +194,7 @@ theQuery = {submittedByUID: user_ID}
 	});
 };
 
-function deletion(user_ID, mytxt, database){
+function deletion(user_ID, mytxt, dbo){
 	var theQuery = {"submittedByUID": user_ID, "GripeText": mytxt};    
 		if(err){
 			console.log(err);
@@ -209,7 +209,7 @@ function deletion(user_ID, mytxt, database){
 };
 
 function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_title, 
-	gripe_image, Gripe_Category, numVotes, numStarVotes, database){
+	gripe_image, Gripe_Category, numVotes, numStarVotes, dbo){
 	var newData = {"submittedByUID": user_ID, "dateSubmitted": date_submitted,
 	 "GripeTitle": gripe_title, "GripeText": submission_text.replace(/\"/g, ""), 
 	 "GripeImage": gripe_image,
@@ -220,7 +220,6 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 			console.log(err);
 			return;
 		}
-		var dbo = database.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.insertOne(newData, function(err, res) {    
 			if (err){
@@ -232,13 +231,12 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 };
 
 
-function User_Query_Everything(user_ID, res, database){
+function User_Query_Everything(user_ID, res, dbo){
 	theQuery = {submittedByUID: user_ID}
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = database.db("gripes");
 		var collection = dbo.collection('gripe');
 		var date = new Date(2021, (get_Month()), (get_Day()+1));
 		// db.collection.remove({dateSubmitted: {"$lt" : new Date(2021, (get_Month()), (get_Day()-1))}})
