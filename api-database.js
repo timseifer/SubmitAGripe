@@ -86,9 +86,10 @@ app.post("/deletion", function(req,res){
 	// User_Query_Everything(null, res);
 });
 
- 
-app.listen(80, function(){
-  console.log("server is running on port 3000");
+
+const server = app.listen(process.env.PORT || 80, () => {
+	const port = server.address().port;
+	console.log(`Express is working on port ${port}`);
 });
 
 var mongo = require('mongodb');
