@@ -20,6 +20,7 @@ app.get("gripe.html", function (req, res) {
 // app.get("/gripe.css", function(req, res) {
 // 	res.sendFile(_dirname + "/"+"gripe.css");
 // });
+//re hashing 
 app.use(express.static(__dirname));
 /*
 1. use ajax with this api setting specific endpoints
