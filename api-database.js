@@ -46,7 +46,7 @@ app.post("/new-gripe", function(req, res) {
 app.post("/continuous", function(req, res) {
 	var userid = req.body.UserID;
 	// console.log(userid);
-  	User_Query(userid, res);
+  	User_Query(userid, res, database);
 });
 
 app.post("/continuous-twitter", function(req, res) {
@@ -56,7 +56,7 @@ app.post("/continuous-twitter", function(req, res) {
 app.post("/continuous-other", function(req,res){
 	var userid = req.body.UserID;
 	console.log("running");
-	User_Query_Everything(userid, res);
+	User_Query_Everything(userid, res, database);
 	// tweets(userid, res);
 });
 
@@ -65,7 +65,7 @@ app.post("/upvote", function(req,res){
 		var mytxt = req.body.user_text;
 		console.log("user id to upvote " + other_user + "\n");
 		console.log("user text " + mytxt + "\n");
-		updoot(other_user, mytxt);
+		updoot(other_user, mytxt, database);
 		// User_Query_Everything(null, res);
 });
  
@@ -74,7 +74,7 @@ app.post("/downvote", function(req,res){
 	var mytxt = req.body.user_text;
 	console.log("user id to downvote " + other_user + "\n");
 	console.log("user text " + mytxt + "\n");
-	downdoot(other_user, mytxt);
+	downdoot(other_user, mytxt, database);
 	// User_Query_Everything(null, res);
 });
 
@@ -97,7 +97,7 @@ var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+var database = MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
 		return;
@@ -123,14 +123,13 @@ function get_Month(){
 	var month = d.getUTCMonth();
 	return month;
 }
-function updoot(user_ID, user_text){
+function updoot(user_ID, user_text, database){
 	theQuery = {submittedByUID: user_ID, GripeText: user_text}
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = db.db("gripes");
+		var dbo = database.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: 1}}, function(err,doc){
 			if(err){
@@ -140,18 +139,16 @@ function updoot(user_ID, user_text){
 				console.log("data field upvoted");
 			}
 		});
-		});
 
 }
 
-function downdoot(user_ID, user_text){
+function downdoot(user_ID, user_text, database){
 	theQuery = {submittedByUID: user_ID, GripeText: user_text}
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = db.db("gripes");
+		var dbo = database.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: -1}}, function(err,doc){
 			if(err){
@@ -161,13 +158,11 @@ function downdoot(user_ID, user_text){
 				console.log("data field upvoted");
 			}
 		});
-		});
 
 }
 
-function User_Query(user_ID, res){
+function User_Query(user_ID, res, db){
 theQuery = {submittedByUID: user_ID}
-MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
 		return;
@@ -196,7 +191,6 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 			}			
 			res.end();
 		}
-	});
 	});
 };
 
@@ -242,9 +236,8 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 };
 
 
-function User_Query_Everything(user_ID, res){
+function User_Query_Everything(user_ID, res, db){
 	theQuery = {submittedByUID: user_ID}
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
@@ -284,7 +277,6 @@ function User_Query_Everything(user_ID, res){
 				}
 				res.end();				
 			}
-		});
 		});
 	};
 
