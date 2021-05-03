@@ -90,7 +90,8 @@ h1 {    font-size: 40px; margin: 1px}
 	position:absolute;
 	left: 50%;
 	margin-left: -220px;
-	padding: 5px 
+	padding: 5px;
+	
 }
 #btn3{
     background-color: #219653;
