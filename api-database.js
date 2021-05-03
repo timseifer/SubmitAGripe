@@ -27,21 +27,6 @@ app.use(express.static(__dirname));
 to interact with the api.
 -----------------------------------------------
 */
-var mongo = require('mongodb');
-var MongoClient = mongo.MongoClient;
-const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
-
-var db = null;
-MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
-	if(err){
-		console.log(err);
-		return;
-	}
-console.log("success");
-db = client.db("gripes");
-});
-
 
 
 app.post("/new-gripe", function(req, res) {
@@ -54,14 +39,14 @@ app.post("/new-gripe", function(req, res) {
 	console.log(text);
 	console.log(category);
 	var time = do_time();
-	new_gripe_submission(userid, text, time, title, image, category,0, 0, db);
+	new_gripe_submission(userid, text, time, title, image, category,0, 0);
 	res.end();
 });
 
 app.post("/continuous", function(req, res) {
 	var userid = req.body.UserID;
 	// console.log(userid);
-  	User_Query(userid, res, db);
+  	User_Query(userid, res);
 });
 
 app.post("/continuous-twitter", function(req, res) {
@@ -71,7 +56,7 @@ app.post("/continuous-twitter", function(req, res) {
 app.post("/continuous-other", function(req,res){
 	var userid = req.body.UserID;
 	console.log("running");
-	User_Query_Everything(userid, res, db);
+	User_Query_Everything(userid, res);
 	// tweets(userid, res);
 });
 
@@ -80,7 +65,7 @@ app.post("/upvote", function(req,res){
 		var mytxt = req.body.user_text;
 		console.log("user id to upvote " + other_user + "\n");
 		console.log("user text " + mytxt + "\n");
-		updoot(other_user, mytxt, db);
+		updoot(other_user, mytxt);
 		// User_Query_Everything(null, res);
 });
  
@@ -89,7 +74,7 @@ app.post("/downvote", function(req,res){
 	var mytxt = req.body.user_text;
 	console.log("user id to downvote " + other_user + "\n");
 	console.log("user text " + mytxt + "\n");
-	downdoot(other_user, mytxt, db);
+	downdoot(other_user, mytxt);
 	// User_Query_Everything(null, res);
 });
 
@@ -98,7 +83,7 @@ app.post("/deletion", function(req,res){
 	var mytxt = req.body.user_text;
 	console.log("user id to downvote " + other_user + "\n");
 	console.log("user text " + mytxt + "\n");
-	deletion(other_user, mytxt, db);
+	deletion(other_user, mytxt);
 	// User_Query_Everything(null, res);
 });
 
@@ -106,6 +91,20 @@ app.post("/deletion", function(req,res){
 const server = app.listen(process.env.PORT || 80, () => {
 	const port = server.address().port;
 	console.log(`Express is working on port ${port}`);
+});
+
+var mongo = require('mongodb');
+var MongoClient = mongo.MongoClient;
+const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+var database = MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+	if(err){
+		console.log(err);
+		return;
+	}
+console.log("success");
+return db;
+
 });
 
 
@@ -125,12 +124,14 @@ function get_Month(){
 	var month = d.getUTCMonth();
 	return month;
 }
-function updoot(user_ID, user_text, dbo){
+function updoot(user_ID, user_text){
 	theQuery = {submittedByUID: user_ID, GripeText: user_text}
+	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
 		}
+		var dbo = db.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: 1}}, function(err,doc){
 			if(err){
@@ -140,16 +141,18 @@ function updoot(user_ID, user_text, dbo){
 				console.log("data field upvoted");
 			}
 		});
+		});
 
 }
 
-function downdoot(user_ID, user_text, database){
+function downdoot(user_ID, user_text){
 	theQuery = {submittedByUID: user_ID, GripeText: user_text}
+	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = database.db("gripes");
+		var dbo = db.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: -1}}, function(err,doc){
 			if(err){
@@ -159,15 +162,18 @@ function downdoot(user_ID, user_text, database){
 				console.log("data field upvoted");
 			}
 		});
+		});
 
 }
 
-function User_Query(user_ID, res, dbo){
+function User_Query(user_ID, res){
 theQuery = {submittedByUID: user_ID}
+MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
 		return;
 	}
+	var dbo = db.db("gripes");
 	var collection = dbo.collection('gripe');
 	collection.find(theQuery).toArray(function(err, items){
 		console.log(items);
@@ -192,34 +198,40 @@ theQuery = {submittedByUID: user_ID}
 			res.end();
 		}
 	});
+	db.close();
+	});
 };
 
-function deletion(user_ID, mytxt, dbo){
+function deletion(user_ID, mytxt){
 	var theQuery = {"submittedByUID": user_ID, "GripeText": mytxt};    
+	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = database.db("gripes");
+		var dbo = db.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.deleteMany(theQuery, function(err, obj) {    
 		if (err) throw err;    
 		console.log("document(s) deleted");    
 			});
+		})
 };
 
 function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_title, 
-	gripe_image, Gripe_Category, numVotes, numStarVotes, dbo){
+	gripe_image, Gripe_Category, numVotes, numStarVotes){
 	var newData = {"submittedByUID": user_ID, "dateSubmitted": date_submitted,
 	 "GripeTitle": gripe_title, "GripeText": submission_text.replace(/\"/g, ""), 
 	 "GripeImage": gripe_image,
 	"GripeCategory": Gripe_Category, "numVotes": numVotes,
 	 "numStarVotes": numStarVotes};
 
+		MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
 		}
+		var dbo = db.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.insertOne(newData, function(err, res) {    
 			if (err){
@@ -228,15 +240,18 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 			console.log("new document inserted");
 		})
 		console.log("success");
+	});
 };
 
 
-function User_Query_Everything(user_ID, res, dbo){
+function User_Query_Everything(user_ID, res){
 	theQuery = {submittedByUID: user_ID}
+	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
 		}
+		var dbo = db.db("gripes");
 		var collection = dbo.collection('gripe');
 		var date = new Date(2021, (get_Month()), (get_Day()+1));
 		// db.collection.remove({dateSubmitted: {"$lt" : new Date(2021, (get_Month()), (get_Day()-1))}})
@@ -271,6 +286,8 @@ function User_Query_Everything(user_ID, res, dbo){
 				}
 				res.end();				
 			}
+		});
+		db.close();
 		});
 	};
 
