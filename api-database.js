@@ -43,6 +43,20 @@ app.post("/new-gripe", function(req, res) {
 	res.end();
 });
 
+var mongo = require('mongodb');
+var MongoClient = mongo.MongoClient;
+const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+var database = MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+	if(err){
+		console.log(err);
+		return;
+	}
+console.log("success");
+return db;
+});
+
+
 app.post("/continuous", function(req, res) {
 	var userid = req.body.UserID;
 	// console.log(userid);
@@ -91,19 +105,6 @@ app.post("/deletion", function(req,res){
 const server = app.listen(process.env.PORT || 80, () => {
 	const port = server.address().port;
 	console.log(`Express is working on port ${port}`);
-});
-
-var mongo = require('mongodb');
-var MongoClient = mongo.MongoClient;
-const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
-var database = MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
-	if(err){
-		console.log(err);
-		return;
-	}
-console.log("success");
-
 });
 
 
