@@ -164,13 +164,13 @@ function downdoot(user_ID, user_text, database){
 
 }
 
-function User_Query(user_ID, res, db){
+function User_Query(user_ID, res, database){
 theQuery = {submittedByUID: user_ID}
 	if(err){
 		console.log(err);
 		return;
 	}
-	var dbo = db.db("gripes");
+	var dbo = database.db("gripes");
 	var collection = dbo.collection('gripe');
 	collection.find(theQuery).toArray(function(err, items){
 		console.log(items);
@@ -197,13 +197,13 @@ theQuery = {submittedByUID: user_ID}
 	});
 };
 
-function deletion(user_ID, mytxt, db){
+function deletion(user_ID, mytxt, database){
 	var theQuery = {"submittedByUID": user_ID, "GripeText": mytxt};    
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = db.db("gripes");
+		var dbo = database.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.deleteMany(theQuery, function(err, obj) {    
 		if (err) throw err;    
@@ -212,7 +212,7 @@ function deletion(user_ID, mytxt, db){
 };
 
 function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_title, 
-	gripe_image, Gripe_Category, numVotes, numStarVotes, db){
+	gripe_image, Gripe_Category, numVotes, numStarVotes, database){
 	var newData = {"submittedByUID": user_ID, "dateSubmitted": date_submitted,
 	 "GripeTitle": gripe_title, "GripeText": submission_text.replace(/\"/g, ""), 
 	 "GripeImage": gripe_image,
@@ -223,7 +223,7 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 			console.log(err);
 			return;
 		}
-		var dbo = db.db("gripes");
+		var dbo = database.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.insertOne(newData, function(err, res) {    
 			if (err){
@@ -235,13 +235,13 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 };
 
 
-function User_Query_Everything(user_ID, res, db){
+function User_Query_Everything(user_ID, res, database){
 	theQuery = {submittedByUID: user_ID}
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = db.db("gripes");
+		var dbo = database.db("gripes");
 		var collection = dbo.collection('gripe');
 		var date = new Date(2021, (get_Month()), (get_Day()+1));
 		// db.collection.remove({dateSubmitted: {"$lt" : new Date(2021, (get_Month()), (get_Day()-1))}})
