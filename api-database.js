@@ -96,7 +96,6 @@ const server = app.listen(process.env.PORT || 80, () => {
 var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
 MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
@@ -285,7 +284,6 @@ function User_Query_Everything(user_ID, res){
 				res.end();				
 			}
 		});
-		db.close();
 		});
 	};
 
