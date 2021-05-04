@@ -200,13 +200,7 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 	 "GripeImage": gripe_image,
 	"GripeCategory": Gripe_Category, "numVotes": numVotes,
 	 "numStarVotes": numStarVotes};
-
-		MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
-		if(err){
-			console.log(err);
-			return;
-		}
-		var dbo = db.db("gripes");
+		var dbo = mongodb.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.insertOne(newData, function(err, res) {    
 			if (err){
@@ -215,7 +209,6 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 			console.log("new document inserted");
 		})
 		console.log("success");
-	});
 };
 
 
