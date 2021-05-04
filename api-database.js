@@ -232,7 +232,7 @@ function User_Query_Everything(user_ID, res){
 			}
 			else{
 			
-			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; }  .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; border } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 50px; 	font-size: 20px;	left: 50%; margin-left: -80px;	padding: 5px;border-radius: 10px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	left: 50%; margin-left: 30px;   color:#fff;    border-radius: 10px;}</style><p> </p>");
+			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; }  .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; border } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 50px; 	font-size: 20px;	left: 50%; margin-left: -180px;	padding: 5px;border-radius: 10px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	left: 50%; margin-left: 130px;   color:#fff;    border-radius: 10px;}</style><p> </p>");
 				
 				for(i = 0; i< items.length; i++){
 					res.write("<p> </p><div class = myDiv style=" + '"' + "background: #56ccf2" + '">');
