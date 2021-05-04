@@ -232,7 +232,7 @@ function User_Query_Everything(user_ID, res){
 			}
 			else{
 			
-			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; }  .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; border } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 50px; 	font-size: 20px;	left: 50%; margin-left: -180px;	padding: 5px;border-radius: 10px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	left: 50%; margin-left: 130px;   color:#fff;    border-radius: 10px;}</style><p> </p>");
+			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; }  .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; border } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 50px; 	font-size: 20px;	left: 50%; margin-left: 150px;	padding: 5px; border: none; border-radius: 8px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	left: 50%; margin-left: 250px;   color:#fff;    border-radius: 10px;}</style><p> </p>");
 				
 				for(i = 0; i< items.length; i++){
 					res.write("<p> </p><div class = myDiv style=" + '"' + "background: #56ccf2" + '">');
@@ -255,7 +255,7 @@ function User_Query_Everything(user_ID, res){
 					res.write("<div class=item4> <input class=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"^"+'"'+">");
 					res.write(" <input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"v"+'"'+"></div>");
 					
-					res.write(" <p><br> </p><p> </p></div></div> </form> </div> <p></p>");
+					res.write(" <p><br> </p></div></div> </form> </div> <p></p>");
 					//trying to do auto deletion here -- come back --
 					//var less_than_zero = items[i].dateSubmitted - date;
 					//var text = items[i].GripeText;
