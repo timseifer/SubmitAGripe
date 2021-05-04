@@ -232,7 +232,7 @@ function User_Query_Everything(user_ID, res){
 			}
 			else{
 			
-			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 96%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	font-size: 20px;	left: 50%; 	margin-left: 80%; width:50px; padding: 5px; border: none; border-radius: 8px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	margin-left: 10%;   color:#fff;    border-radius: 10px;}</style><p> </p>");
+			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 96%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	font-size: 20px;	left: 50%; 	margin-left: 80%; width:50px; padding: 5px; border: none; border-radius: 8px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	margin-left: -80%;   color:#fff;    border-radius: 10px;}</style><p> </p>");
 				
 				for(i = 0; i< items.length; i++){
 					res.write("<p> </p><div class = myDiv style=" + '"' + "background: #56ccf2" + '">');
@@ -255,7 +255,7 @@ function User_Query_Everything(user_ID, res){
 					res.write("<input class=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"^"+'"'+"></div>");
 					//res.write("<div style= font-weight:bold> UP | DOWN</div>");
 					
-					res.write("</div><p> </p></div> </form> </div> <p></p>");
+					res.write("</div><br></div> </form> </div> <p></p>");
 					//trying to do auto deletion here -- come back --
 					//var less_than_zero = items[i].dateSubmitted - date;
 					//var text = items[i].GripeText;
