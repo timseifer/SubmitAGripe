@@ -166,7 +166,7 @@ theQuery = {submittedByUID: user_ID}
 		}
 		else{
 			
-			res.write("	<style> .myDiv { border: 1px  black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 200px; 	font-size: 20px; 	left: 50%;	margin-left: 110px;	padding: 5px;border-radius: 10px;} .btn3{    background-color: #219653;	width: 200px; 	font-size: 20px; 	padding: 5px;    left: 50%;	margin-left: 20px;   color:#fff;    border-radius: 10px;}</style>");
+			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 200px; 	font-size: 20px; 	left: 50%;	margin-left: 110px;	padding: 5px;border-radius: 10px;} .btn3{    background-color: #219653;	width: 200px; 	font-size: 20px; 	padding: 5px;    left: 50%;	margin-left: 20px;   color:#fff;    border-radius: 10px;}</style>");
 			
 			for(i = 0; i< items.length; i++){
 				res.write("<p></p><div class = myDiv style=" + '"' + "background: #56ccf2" + '"');
@@ -180,7 +180,7 @@ theQuery = {submittedByUID: user_ID}
 				res.write("</div><div class=item2><div style= font-weight:bold>CATEGORY</div>"+items[i].GripeCategory);
 				res.write("<hr color=#000000></div><div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"<hr color=#000000></div>");
 				res.write("</div><div class=item4><div style= font-weight:bold>DELETE POST</div>")
-				res.write("<input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"deletion_button(this.id" + ','+"this.name)"+" value="+'"'+"DELETE"+'"'+" style="+'"'+"left: 50%; margin-left: -100px"+'"'+"><div>");	
+				res.write("<input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"deletion_button(this.id" + ','+"this.name)"+" value="+'"'+"DELETE"+'"'+" style="+'"'+"left: 50%; margin-left: -50px"+'"'+"><div>");	
 				res.write("<p><br></p><p> </p></div></div> </form> </div> <p></p>");		
 			}			
 			res.end();
@@ -232,7 +232,7 @@ function User_Query_Everything(user_ID, res){
 			}
 			else{
 			
-			res.write("	<style> .myDiv { border: 1px  black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; }  .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 200px; 	font-size: 20px; 	left: 50%;	margin-left: -220px;	padding: 5px;border-radius: 10px;} .btn3{    background-color: #219653;	width: 200px; 	font-size: 20px; 	padding: 5px;    left: 50%;	margin-left: 20px;   color:#fff;    border-radius: 10px;}</style>");
+			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; }  .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; border } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 50px; 	font-size: 20px; 	left: 50%;	margin-left: -80px;	padding: 5px;border-radius: 10px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px;    left: 50%;	margin-left: 30px;   color:#fff;    border-radius: 10px;}</style>");
 				
 				for(i = 0; i< items.length; i++){
 					res.write("<p></p><div class = myDiv style=" + '"' + "background: #56ccf2" + '">');
@@ -252,7 +252,7 @@ function User_Query_Everything(user_ID, res){
 					res.write("<div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"<hr color=#000000></div>");
 					//res.write("<div style= font-weight:bold> UP | DOWN</div>");
 										
-					res.write("<div class=item4><input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"^"+'"'+" style="+'"'+"margin-left: 80px; width: 50px"+'"'+"><input class=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"v"+'"'+" style="+'"'+"margin-left: -80px; width: 50px"+'"'+"></div><div>");
+					res.write("<div class=item4><input class=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"^"+'"'"> <input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"v"+'"'+"></div>");
 					
 					res.write(" <p><br> </p><p> </p></div></div> </form> </div> <p></p>");
 					//trying to do auto deletion here -- come back --
