@@ -245,10 +245,6 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 
 function User_Query_Everything(user_ID, res){
 	theQuery = {submittedByUID: user_ID}
-		if(err){
-			console.log(err);
-			return;
-		}
 		var dbo = mongodb.db("gripes");
 		var collection = dbo.collection('gripe');
 		var date = new Date(2021, (get_Month()), (get_Day()+1));
