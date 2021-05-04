@@ -253,10 +253,9 @@ function User_Query_Everything(user_ID, res){
 					res.write("<div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"</div>");
 					//res.write("<div style= font-weight:bold> UP | DOWN</div>");
 										
-					res.write("<input style= background-color:black; type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+"></div><p></p>");
+					res.write("<input style= background-color:black; type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+">");
 					
-					res.write("</div></form>");
-					res.write("<p></p>");
+					res.write(" <p></p></div></div> </form> </div>");
 					//trying to do auto deletion here -- come back --
 					//var less_than_zero = items[i].dateSubmitted - date;
 					//var text = items[i].GripeText;
