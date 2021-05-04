@@ -166,7 +166,7 @@ theQuery = {submittedByUID: user_ID}
 		}
 		else{
 			
-			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 96%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 200px; 	font-size: 20px; 	left: 50%;	padding: 5px;border-radius: 10px;}</style>");
+			res.write("	<style> .myDiv { border: 3px outset black; text-align: center; border-radius: 10px; width: 96%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 200px; 	font-size: 20px; 	left: 50%;	padding: 5px;border-radius: 10px;}</style>");
 			
 			for(i = 0; i< items.length; i++){
 				res.write("<p></p><div class = myDiv style=" + '"' + "background: #56ccf2" + '"');
@@ -232,7 +232,7 @@ function User_Query_Everything(user_ID, res){
 			}
 			else{
 			
-			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 96%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	font-size: 20px;	left: 50%; 	margin-left: 80%; width:50px; padding: 5px; border: none; border-radius: 8px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	margin-left: -80%;   color:#fff;    border-radius: 10px;}</style><p> </p>");
+			res.write("	<style> .myDiv { border: 3px outset black; text-align: center; border-radius: 10px; width: 96%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	font-size: 20px;	left: 50%; 	margin-left: 75%; width:50px; padding: 5px; border: none; border-radius: 8px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	margin-left: -80%;   color:#fff;    border-radius: 10px;}</style><p> </p>");
 				
 				for(i = 0; i< items.length; i++){
 					res.write("<p> </p><div class = myDiv style=" + '"' + "background: #56ccf2" + '">');
