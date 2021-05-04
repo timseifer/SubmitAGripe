@@ -181,7 +181,7 @@ theQuery = {submittedByUID: user_ID}
 				res.write("<hr color=#000000></div><div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"<hr color=#000000></div>");
 				res.write("</div><div class=item4><div style= font-weight:bold>DELETE POST</div>")
 				res.write("<input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"deletion_button(this.id" + ','+"this.name)"+" value="+'"'+"DELETE"+'"'+"><div>");	
-				res.write("<br></div></div> </form> </div> <p></p>");		
+				res.write("</div></div> </form> </div> <p></p>");		
 			}			
 			res.end();
 		}
@@ -232,7 +232,7 @@ function User_Query_Everything(user_ID, res){
 			}
 			else{
 			
-			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 96%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; }  .item4 {grid-area: footer} .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right' 'footer footer footer footer'; border } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	width: 50px; 	font-size: 20px;	left: 50%; 	padding: 5px; border: none; border-radius: 8px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	left: 50%; margin-left: 250px;   color:#fff;    border-radius: 10px;}</style><p> </p>");
+			res.write("	<style> .myDiv { border: 2px outset black; text-align: center; border-radius: 10px; width: 96%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right'; } .grid-container > div { text-align: center; } .btn2{   background-color: #f2994a;	font-size: 20px;	left: 50%; 	margin-left: 80%; width:50px; padding: 5px; border: none; border-radius: 8px;} .btn3{    background-color: #219653;	width: 50px; 	font-size: 20px; 	padding: 5px; 	margin-left: 80%;   color:#fff;    border-radius: 10px;}</style><p> </p>");
 				
 				for(i = 0; i< items.length; i++){
 					res.write("<p> </p><div class = myDiv style=" + '"' + "background: #56ccf2" + '">');
@@ -247,15 +247,15 @@ function User_Query_Everything(user_ID, res){
 					//res.write("<div style= font-weight:bold>GRIPE IMAGE</div>"+items[i].GripeImage);
 
 					res.write("<div class=item2><div style= font-weight:bold>CATEGORY</div>"+items[i].GripeCategory);
-					res.write("<hr color=#000000></div>");
-					
-					res.write("<div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"<hr color=#000000></div></div>");
-					//res.write("<div style= font-weight:bold> UP | DOWN</div>");
-										
-					res.write("<div class=item4> <input class=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"^"+'"'+">");
+					res.write("<hr color=#000000>");
 					res.write(" <input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"v"+'"'+"></div>");
 					
-					res.write(" <p><br> </p></div></div> </form> </div> <p></p>");
+					res.write("<div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes);
+					res.write("<hr color=#000000>");
+					res.write("<input class=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"^"+'"'+">");
+					//res.write("<div style= font-weight:bold> UP | DOWN</div>");
+					
+					res.write("</div></div> </form> </div> <p></p>");
 					//trying to do auto deletion here -- come back --
 					//var less_than_zero = items[i].dateSubmitted - date;
 					//var text = items[i].GripeText;
