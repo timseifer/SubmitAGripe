@@ -177,10 +177,10 @@ theQuery = {submittedByUID: user_ID}
 				res.write("<hr color=#000000><div style= font-weight:bold>THE GRIPE</div>"+items[i].GripeText);
 				//res.write("<br>"+items[i].GripeImage);
 				res.write("<hr color=#000000>");
-				res.write("<div class=item2><div style= font-weight:bold>CATEGORY</div>"+items[i].GripeCategory);
-				res.write("</div><hr color=#000000><div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"</div>");
+				res.write("</div><div class=item2><div style= font-weight:bold>CATEGORY</div>"+items[i].GripeCategory);
+				res.write("<hr color=#000000></div><div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"</div>");
 				res.write("</div><div class=item4><div style= font-weight:bold>DELETE POST</div>")
-				res.write("<input style=background-color:white; type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"deletion_button(this.id" + ','+"this.name)"+"><div>");	
+				res.write("<input id=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"deletion_button(this.id" + ','+"this.name)"+"><div>");	
 				res.write(" <p></p></div></div> </form> </div> <p></p>");		
 			}			
 			res.end();
@@ -235,7 +235,7 @@ function User_Query_Everything(user_ID, res){
 			res.write("	<style> .myDiv { border: 1px  black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right'; } .grid-container > div { text-align: center; }</style>");
 				
 				for(i = 0; i< items.length; i++){
-					res.write("<p></p><div class = myDiv style=" + '"' + "background: #56ccf2" + '"');
+					res.write("<p></p><div class = myDiv style=" + '"' + "background: #56ccf2" + '">');
 					res.write("<form id="+'"'+ "like_form"+'"'+ ">");
 					//res.write("From user <div id=user>"+ items[i].submittedByUID+"</div>");
 					//res.write("<div style= font-weight:bold>SUBMITTED ON</div>"+items[i].dateSubmitted);
@@ -247,12 +247,12 @@ function User_Query_Everything(user_ID, res){
 					//res.write("<div style= font-weight:bold>GRIPE IMAGE</div>"+items[i].GripeImage);
 
 					res.write("</div><div class=item2><div style= font-weight:bold>CATEGORY</div>"+items[i].GripeCategory);
-					res.write("<hr color=#000000><input type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+"></div>");
+					res.write("<hr color=#000000><input id=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+"></div>");
 					
-					res.write("</div><div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"</div>");
+					res.write("<div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"<hr color=#000000></div>");
 					//res.write("<div style= font-weight:bold> UP | DOWN</div>");
 										
-					res.write("<hr color=#000000><input style= background-color:black; type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+"></div>");
+					res.write("<input id=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+"></div>");
 					
 					res.write(" <p></p></div></div> </form> </div> <p></p>");
 					//trying to do auto deletion here -- come back --
