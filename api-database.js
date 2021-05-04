@@ -126,12 +126,7 @@ function get_Month(){
 }
 function updoot(user_ID, user_text){
 	theQuery = {submittedByUID: user_ID, GripeText: user_text}
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
-		if(err){
-			console.log(err);
-			return;
-		}
-		var dbo = db.db("gripes");
+		var dbo = mongodb.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: 1}}, function(err,doc){
 			if(err){
@@ -141,18 +136,12 @@ function updoot(user_ID, user_text){
 				console.log("data field upvoted");
 			}
 		});
-		});
 
 }
 
 function downdoot(user_ID, user_text){
 	theQuery = {submittedByUID: user_ID, GripeText: user_text}
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
-		if(err){
-			console.log(err);
-			return;
-		}
-		var dbo = db.db("gripes");
+		var dbo = mongodb.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.findOneAndUpdate(theQuery, {$inc: {numVotes: -1}}, function(err,doc){
 			if(err){
@@ -162,18 +151,12 @@ function downdoot(user_ID, user_text){
 				console.log("data field upvoted");
 			}
 		});
-		});
 
 }
 
 function User_Query(user_ID, res){
 theQuery = {submittedByUID: user_ID}
-MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
-	if(err){
-		console.log(err);
-		return;
-	}
-	var dbo = db.db("gripes");
+	var dbo = mongodb.db("gripes");
 	var collection = dbo.collection('gripe');
 	collection.find(theQuery).toArray(function(err, items){
 		console.log(items);
@@ -198,23 +181,16 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 			res.end();
 		}
 	});
-	});
 };
 
 function deletion(user_ID, mytxt){
 	var theQuery = {"submittedByUID": user_ID, "GripeText": mytxt};    
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
-		if(err){
-			console.log(err);
-			return;
-		}
-		var dbo = db.db("gripes");
+		var dbo = mongodb.db("gripes");
 		var collection = dbo.collection('gripe');
 		collection.deleteMany(theQuery, function(err, obj) {    
 		if (err) throw err;    
 		console.log("document(s) deleted");    
 			});
-		})
 };
 
 function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_title, 
