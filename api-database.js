@@ -56,7 +56,7 @@ app.post("/continuous-twitter", function(req, res) {
 app.post("/continuous-other", function(req,res){
 	var userid = req.body.UserID;
 	console.log("running");
-	User_Query_Everything(userid, res);
+	User_Query_Everything(userid, res, mongodb);
 	// tweets(userid, res);
 });
 
@@ -93,16 +93,16 @@ const server = app.listen(process.env.PORT || 80, () => {
 	console.log(`Express is working on port ${port}`);
 });
 
-var mongo = require('mongodb'),
-var MongoClient = mongo.MongoClient,
+var mongo = require('mongodb');
+var MongoClient = mongo.MongoClient;
 const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-global.db;
-MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+var mongodb;
+MongoClient.connect(url, {useUnifiedTopology: true, poolSize: 10},function(err, db){
 	if(err){
 		console.log(err);
 		return;
 	}
-global.db = db;
+	mongodb = db;
 console.log("success");
 
 });
@@ -168,7 +168,12 @@ function downdoot(user_ID, user_text){
 
 function User_Query(user_ID, res){
 theQuery = {submittedByUID: user_ID}
-	var dbo = global.db.db("gripes");
+MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
+	if(err){
+		console.log(err);
+		return;
+	}
+	var dbo = db.db("gripes");
 	var collection = dbo.collection('gripe');
 	collection.find(theQuery).toArray(function(err, items){
 		console.log(items);
@@ -192,6 +197,7 @@ theQuery = {submittedByUID: user_ID}
 			}			
 			res.end();
 		}
+	});
 	});
 };
 
@@ -239,12 +245,11 @@ function new_gripe_submission(user_ID, submission_text, date_submitted,gripe_tit
 
 function User_Query_Everything(user_ID, res){
 	theQuery = {submittedByUID: user_ID}
-	MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 		if(err){
 			console.log(err);
 			return;
 		}
-		var dbo = db.db("gripes");
+		var dbo = mongodb.db("gripes");
 		var collection = dbo.collection('gripe');
 		var date = new Date(2021, (get_Month()), (get_Day()+1));
 		// db.collection.remove({dateSubmitted: {"$lt" : new Date(2021, (get_Month()), (get_Day()-1))}})
@@ -279,7 +284,6 @@ function User_Query_Everything(user_ID, res){
 				}
 				res.end();				
 			}
-		});
 		});
 	};
 
