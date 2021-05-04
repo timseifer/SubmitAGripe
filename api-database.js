@@ -236,7 +236,7 @@ function User_Query_Everything(user_ID, res){
 			res.write("	<style> .myDiv { border: 1px  black; text-align: center; border-radius: 10px; width: 95%; position:relative; left: 2%; display:block} .item1 { grid-area: header; } .item2 { grid-area: main; } .item3 { grid-area: right; } .grid-container {   display: grid;   grid-template-areas: 'header header header header' 'main main right right'; } .grid-container > div { text-align: center; } #blueish{background: #56ccf2;}</style>");
 				
 				for(i = 0; i< items.length; i++){
-					res.write("<div class = myDiv");
+					res.write("<div class = myDiv id=blueish");
 					res.write("<form id="+'"'+ "like_form"+'"'+ ">");
 					//res.write("From user <div id=user>"+ items[i].submittedByUID+"</div>");
 					//res.write("<div style= font-weight:bold>SUBMITTED ON</div>"+items[i].dateSubmitted);
@@ -256,6 +256,7 @@ function User_Query_Everything(user_ID, res){
 					res.write("<input style= background-color:black; type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+"></div><p></p>");
 					
 					res.write("</form>");
+					res.write("<p></p>");
 					//trying to do auto deletion here -- come back --
 					//var less_than_zero = items[i].dateSubmitted - date;
 					//var text = items[i].GripeText;
