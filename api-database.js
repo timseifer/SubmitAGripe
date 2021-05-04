@@ -247,12 +247,12 @@ function User_Query_Everything(user_ID, res){
 					//res.write("<div style= font-weight:bold>GRIPE IMAGE</div>"+items[i].GripeImage);
 
 					res.write("</div><div class=item2><div style= font-weight:bold>CATEGORY</div>"+items[i].GripeCategory);
-					res.write("<hr color=#000000><input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"v"+'"'+"></div>");
+					res.write("<hr color=#000000><input class=btn2 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"v"+'"'+" style="+'"'+"margin-left: -80%; width: 50px"+'"'+"></div>");
 					
 					res.write("<div class=item3><div style= font-weight:bold>VOTES</div><div id=votes>"+items[i].numVotes+"<hr color=#000000></div>");
 					//res.write("<div style= font-weight:bold> UP | DOWN</div>");
 										
-					res.write("<input class=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"^"+'"'+"></div>");
+					res.write("<input class=btn3 type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+" value="+'"'+"^"+'"'+" style="+'"'+"margin-left: -80%; width: 50px"+'"'+"></div>");
 					
 					res.write(" <p><br> </p><p> </p><p> </p></div></div> </form> </div> <p></p>");
 					//trying to do auto deletion here -- come back --
