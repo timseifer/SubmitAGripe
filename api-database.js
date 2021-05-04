@@ -93,14 +93,16 @@ const server = app.listen(process.env.PORT || 80, () => {
 	console.log(`Express is working on port ${port}`);
 });
 
-var mongo = require('mongodb');
-var MongoClient = mongo.MongoClient;
+var mongo = require('mongodb'),
+var MongoClient = mongo.MongoClient,
 const url = "mongodb+srv://newuser1:Password1@cluster0.afvxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+global.db;
 MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 	if(err){
 		console.log(err);
 		return;
 	}
+global.db = db;
 console.log("success");
 
 });
@@ -166,12 +168,7 @@ function downdoot(user_ID, user_text){
 
 function User_Query(user_ID, res){
 theQuery = {submittedByUID: user_ID}
-MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
-	if(err){
-		console.log(err);
-		return;
-	}
-	var dbo = db.db("gripes");
+	var dbo = global.db.db("gripes");
 	var collection = dbo.collection('gripe');
 	collection.find(theQuery).toArray(function(err, items){
 		console.log(items);
@@ -195,7 +192,6 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db){
 			}			
 			res.end();
 		}
-	});
 	});
 };
 
