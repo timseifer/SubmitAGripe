@@ -30,6 +30,7 @@ to interact with the api.
 
 
 app.post("/new-gripe", function(req, res) {
+	console.log("new gripe has been submitted\n")
 	var userid = req.body.userID
   	var title = req.body.title;
 	var text = req.body.gripe;
@@ -239,13 +240,10 @@ function User_Query_Everything(user_ID, res){
 					res.write("<input type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"upvote_botton(this.id" + ','+"this.name)"+">");
 					res.write("<input style= background-color:black; type="+'"'+"button"+'"'+"id="+'"' +items[i].submittedByUID+'"'+"name="+'"'+ items[i].GripeText+'"'+"onclick="+"downvote_botton(this.id" + ','+"this.name)"+">");
 					res.write("<br>"+"<br>");	
-					res.write("</form>");	
-					var less_than_zero = items[i].dateSubmitted - date;
-					var text = items[i].GripeText;
-					if(less_than_zero <= 0){
-						console.log("deletion taking place\n");
-						// db.collection.remove({GripeText: text})
-					}	
+					res.write("</form>");
+					//trying to do auto deletion here -- come back --
+					//var less_than_zero = items[i].dateSubmitted - date;
+					//var text = items[i].GripeText;
 				}
 				res.end();				
 			}
