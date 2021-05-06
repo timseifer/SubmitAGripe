@@ -27,7 +27,7 @@ h1 {    font-size: 40px; margin: 1px}
 #header-section .header a {
   float: left;
   color: #fff;
-  text-align: center;
+  text-align: center; 
   font-weight: bold;
   padding: 12px;
   text-decoration: none;
